@@ -982,8 +982,8 @@ function copyToClipboard(container) {
 function openPreview() {
   var url = "https://dunals.github.io/Auto-Dealers/";
   if (/Mobi|Android/i.test(navigator.userAgent)) {
-    // Open in a new tab if the device is mobile
-    window.open(url, "_blank");
+    // Open in a popup window for mobile devices
+    var popupWindow = window.open(url, "_blank", "width=300,height=200");
   } else {
     // Open in a popup window for non-mobile devices
     var popupWindow = window.open(url, "_blank", "width=600,height=400");
