@@ -48,6 +48,9 @@
   <!-- Modal content -->
   <div class="modal-content">
     <span class="close" onclick="closeModal()">&times;</span>
+    <div class="bg">
+        <div class="loader"></div>
+      </div>
     <iframe id="iframe" src="" frameborder="0"></iframe>
   </div>
 </div>
@@ -55,7 +58,7 @@
 <!-- Button to open the modal -->
 <div class="button">
   <button onclick="openModal()">
-    <span>PREVIE1W</span>
+    <span>PREVIEW</span>
   </button>
 </div>
 
@@ -70,7 +73,6 @@
     </div>
     
     </center>
-    <p class="container p">To start, add the following HTML codes to your index.html file</p>
 
     <div class="card">
         <div class="header">
@@ -114,7 +116,6 @@
     </div>
 
 
-<p class="container p">Next, add the following CSS codes to your style.css</p>
     <div class="card">
         <div class="header">
           <div class="top">
@@ -175,7 +176,6 @@
 
       </div>
       
-     <p class="container p">Next, add the following JavaScript code to your script.js</p>
 <div class="card">
     <div class="header">
         <div class="top">
@@ -197,39 +197,7 @@
         <button class="copy-btn" onclick="copyToClipboard(this.parentNode)">Copy</button>
         <div class="copy-message">Copy successful!</div>
         <pre><code id="code" class="language-js">
-// Your JavaScript code goes here
-function copyToClipboard(container) {
-    const codeElement = container.querySelector('code');
-    const range = document.createRange();
-    range.selectNodeContents(codeElement);
-    const selection = window.getSelection();
-    selection.removeAllRanges();
-    selection.addRange(range);
-
-    try {
-        const successful = document.execCommand('copy');
-        const msg = successful ? 'successful' : 'unsuccessful';
-        console.log('Copy command was ' + msg);
-
-        // Show the copy success message
-        if (successful) {
-            const copyMessage = container.querySelector('.copy-message');
-            copyMessage.style.display = 'block';
-            copyMessage.style.opacity = 1;
-
-            // Hide the message after 2 seconds
-            setTimeout(() => {
-                copyMessage.style.opacity = 0;
-                setTimeout(() => copyMessage.style.display = 'none', 500);
-            }, 2000);
-        }
-    } catch (err) {
-        console.log('Oops, unable to copy');
-    }
-
-    // Clear the selection
-    selection.removeAllRanges();
-}
+//empty
 </code></pre>
     </div>
 </div>
@@ -357,14 +325,20 @@ function copyToClipboard(container) {
 var modal = document.getElementById("myModal");
 var overlay = document.getElementById("overlay1");
 
-// Get the button that opens the modal
-var btn = document.getElementById("preview-btn");
+// Get the iframe
+var iframe = document.getElementById("iframe");
 
 // When the user clicks the button, open the modal 
 function openModal() {
   modal.style.display = "block";
   overlay.style.display = "block";
-  document.getElementById("iframe").src = "https://colorlib.com/etc/lf/Login_v2/index.html";
+  iframe.style.display = "none"; // Hide the iframe initially
+  document.getElementById("iframe").onload = function() {
+    // When the iframe loads, hide the loader and show the iframe
+    iframe.style.display = "block";
+    document.querySelector('.loader').style.display = 'none';
+  };
+  document.getElementById("iframe").src = "https://colorlib.com/etc/lf/Login_v3/index.html";
 }
 
 // When the user clicks on <span> (x) or outside the modal area, close the modal
