@@ -536,7 +536,7 @@ pre[class*="language-"] {
     text-align: center;
     font-size: 17px;
     padding: 16px;
-    width: 130px;
+    width: 120px;
     transition: all 0.5s;
     cursor: pointer;
     margin: 5px;
@@ -643,6 +643,7 @@ code[class*=language-],pre[class*=language-]{color:#ccc;background:0 0;font-fami
 
   }
   
+  /* Close Button */
   .close {
     color: #000000;
     float: right;
@@ -666,20 +667,20 @@ code[class*=language-],pre[class*=language-]{color:#ccc;background:0 0;font-fami
  /* Media Queries */
 @media screen and (max-width: 768px) {
     .modal {
-        width: 80%;
+        width: 100%;
     }
     .modal-content {
         
-        width: 70%; /* Could be more or less, depending on screen size */    
+        width: 90%; /* Could be more or less, depending on screen size */    
       }
 }
 
 @media screen and (max-width: 576px) {
     .modal {
-        width: 80%;
+        width: 100%;
     }
     .modal-content {
         
-        width: 70%; /* Could be more or less, depending on screen size */    
+        width: 90%; /* Could be more or less, depending on screen size */    
       }
 } 
