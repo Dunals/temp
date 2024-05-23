@@ -169,6 +169,63 @@
 header {margin-top: -1px;border-radius: 5px;}
 h1{margin-bottom: 20px;margin-top: 10px;}
 .p{margin-bottom: 20px;}
+#shareButton {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#shareButton:hover {
+    background-color: #45a049;
+}
+
+/* Styles for the custom alert */
+.custom-alert {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(76, 175, 80, 0.9); /* Semi-transparent green color */
+    color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.custom-alert.show {
+    opacity: 1;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 768px) {
+    .custom-alert {
+        width: 80%;
+        max-width: 300px;
+        padding: 15px;
+        font-size: 18px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 480px) {
+    .custom-alert {
+        width: 90%;
+        max-width: 250px;
+        padding: 10px;
+        font-size: 12px;
+        line-height: 1.3;
+    }
+}
+
+
+
     </style>
 </head>
 <body>
@@ -197,6 +254,7 @@ h1{margin-bottom: 20px;margin-top: 10px;}
     <div class="container">
         <h1>sample name</h1>
         <div class="editor">
+            
             <textarea id="htmlCode" placeholder="HTML">&lt;!-- multistep form --&gt;
 &lt;form id=&quot;msform&quot;&gt;
   &lt;!-- progressbar --&gt;
@@ -371,7 +429,7 @@ body {
 
 
 </textarea>
-            <textarea id="jsCode" placeholder="JavaScript">$('.form').find('input, textarea').on('keyup blur focus', function (e) {
+            <textarea id="jsCode" placeholder="JavaScodet">$('.form').find('input, textarea').on('keyup blur focus', function (e) {
   
   var $this = $(this),
       label = $this.prev('label');
@@ -421,9 +479,12 @@ $('.tab a').on('click', function (e) {
 
         <input type="range" class="height-control" id="iframeHeight" min="100" max="1000" value="500">
 
+
         <div class="preview">
             <iframe id="previewFrame"></iframe>
         </div>
+        <button id="shareButton">Share</button>
+<input type="text" id="shareLink" readonly style="display: none;">
     </div>
     
     <footer class="footer">
@@ -431,7 +492,7 @@ $('.tab a').on('click', function (e) {
 <nav class="footer-nav">
 <a href="https://dunals.github.io/Auto-Dealers/">Home</a> |
 <a href="#">Privacy Policy</a> |
-<a href="#">Terms and pakaya</a>
+<a href="#">Terms and conditions</a>
 </nav>
 
 <p class="p">&copy; <span id="year"></span> AutoDealersUsa. All rights reserved.</p>
@@ -506,6 +567,49 @@ document.getElementById('iframeHeight').addEventListener('input', updateIframeHe
 
 // Initialize iframe height
 updateIframeHeight();
+
+
+// Add this JavaScript below your existing code
+document.getElementById('shareButton').addEventListener('click', function() {
+    // Generate shareable link
+    var shareableUrl = window.location.href + '?url=' + encodeURIComponent("pakaya-hutthoo-1.html");
+
+    // Copy shareable link to clipboard
+    navigator.clipboard.writeText(shareableUrl).then(function() {
+        // Show success message
+        showMessage('URL copied!');
+    }).catch(function(error) {
+        console.error('Failed to copy Url: ', error);
+        // Show error message
+        showMessage('Failed to copy. Please try again later.');
+    });
+});
+
+function showMessage(message) {
+    // Create the custom alert element
+    var alert = document.createElement('div');
+    alert.className = 'custom-alert';
+    alert.textContent = message;
+
+    // Append the alert to the document body
+    document.body.appendChild(alert);
+
+    // Show the alert
+    setTimeout(function() {
+        alert.classList.add('show');
+        // Hide the alert after 3 seconds
+        setTimeout(function() {
+            alert.classList.remove('show');
+            // Remove the alert from the DOM after hiding
+            setTimeout(function() {
+                document.body.removeChild(alert);
+            }, 300); // Adjust this timeout to match the CSS transition duration
+        }, 3000); // Adjust this timeout to control how long the alert stays visible
+    }, 100); // Delay showing the alert to ensure proper transition
+}
+
+
+
     </script>
 
 </body>
