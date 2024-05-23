@@ -4,197 +4,183 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Code</title>
+    <title>Edit Code - sample name</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
     <style>
- body {
-    font-family: 'Roboto', Arial, sans-serif;
-    background-color: #1e1e1e;
-    color: #d4d4d4;
-    margin: 0;
-    padding: 0;
-    overflow-y: scroll;
-    scrollbar-width: thin;
-    scrollbar-color: #4caf50 #2d2d2d;
+        @font-face {font-family: "Ubuntu";src: url("../read/Ubuntu-Regular.ttf") format("truetype");font-weight: normal;font-style: normal;}* {margin: 0px;box-sizing: border-box;font-family: "Ubuntu", sans-serif;}
+        body {
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            margin: 0;
+            padding: 0;
+            overflow-y: scroll;
+            scrollbar-width: thin;
+            scrollbar-color: #4caf50 #2d2d2d;
+        }
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .editor {
+            display: flex;
+            width: 90%;
+            margin-bottom: 20px;
+        }
+
+        .CodeMirror {
+            width: 100%;
+            height: 400px;
+            margin: 10px;
+            border: 2px solid #010409;
+            border-radius: 3px;
+            font-size: 14px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+        }
+
+        .preview {
+            width: 90%;
+        }
+
+        .footer {background-color: #010409;color: #fff;text-align: center;}
+        .footer p {margin-top: 15px;}
+        .footer-nav a {color: #fff;text-decoration: none;}.footer-nav a:hover {text-decoration: underline;}
+        .footer-nav {margin-top: 20px;}
+        iframe {
+            width: 100%;
+            height: 500px;
+            border: 2px solid #010409;
+            border-radius: 4px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            transition: box-shadow 0.3s ease;
+            margin-bottom: 50px;
+            background: #fff;
+        }
+
+        iframe:hover {
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        @media (max-width: 1024px) {
+            .editor {
+                flex-direction: column;
+                
+            }
+
+            .CodeMirror {
+                height: 300px;
+            }
+
+            .preview iframe {
+                height: 450px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .CodeMirror {
+                width: 95%;
+                height: 250px;
+            }
+
+            .preview iframe {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .CodeMirror {
+                margin: 5px;
+            }
+        }
+
+        @media (max-width: 320px) {
+            .CodeMirror {
+                height: 200px;
+            }
+
+            .preview iframe {
+                height: 350px;
+            }
+        }
+        
+        /* Adjust scrollbar width for CodeMirror */
+.CodeMirror-scrollbar-filler, .CodeMirror-gutter-filler {
+    width: 2px;  /* Adjust scrollbar width */
+    height: 2px; /* Adjust scrollbar height */
 }
 
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 20px;
+.CodeMirror-vscrollbar, .CodeMirror-hscrollbar {
+    scrollbar-width: thin; /* For Firefox */
+    scrollbar-color: #4caf50 #2d2d2d; /* For Firefox */
 }
 
-.editor {
-    display: flex;
-    width: 90%;
-    margin-bottom: 20px;
+/* WebKit-based browsers (Chrome, Safari) */
+.CodeMirror-vscrollbar::-webkit-scrollbar,
+.CodeMirror-hscrollbar::-webkit-scrollbar {
+    width: 2px;  /* Adjust scrollbar width */
+    height: 2px; /* Adjust scrollbar height */
 }
 
-.editor textarea {
-    width: 100%;
-    height: 400px;
-    margin: 10px;
-    padding: 10px;
-    background-color: #2d2d2d;
-    color: #d4d4d4;
-    border: 2px solid #010409;
-    border-radius: 5px;
-    font-family: 'Consolas', monospace;
-    font-size: 14px;
-    resize: none;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-    overflow-y: auto;
-    scrollbar-width: thin;
-    scrollbar-color: #4caf50 #2d2d2d;
+.CodeMirror-vscrollbar::-webkit-scrollbar-track,
+.CodeMirror-hscrollbar::-webkit-scrollbar-track {
+    background: #2d2d2d; /* Scrollbar track color */
 }
 
-.editor textarea::-webkit-scrollbar {
-    width: 12px;
+.CodeMirror-vscrollbar::-webkit-scrollbar-thumb,
+.CodeMirror-hscrollbar::-webkit-scrollbar-thumb {
+    background-color: #4caf50; /* Scrollbar thumb color */
+    border-radius: 2px; /* Scrollbar thumb roundness */
 }
 
-.editor textarea::-webkit-scrollbar-track {
-    background-color: #2d2d2d;
+
+.navbar {width: 100%;padding-left: 20px;height: 70px; display: flex;align-items: center;background-color: #010409;justify-content: space-around;position: sticky;top: 0;z-index: 1000; }
+.nav-title span a {color: #fff;font-size: 1.5rem;}
+.hamburgerMenu {display: none;}
+.links {font-size: 18px;}
+.links a {color: #fff;text-decoration: none;padding: 13px 10px 13px 10px;}
+.links a:hover {background-color: #010409;}
+#hamburger {display: none;}a{text-decoration: none;color: #fff;}
+@media (max-width:600px) {.navbar {justify-content: space-between;}
+.hamburgerMenu {display: block;margin-right: 20px;}.hamburgerMenu label {display: inline-block;cursor: pointer;padding: 13px;height: 50px;width: 50px;}
+.hamburgerMenu label:hover,.navbar #hamburger:checked~.hamburgerMenu>label {background-color: #010409;}
+.hamburgerMenu label div { border-top: 2px solid #fff; display: block; height: 10px; width: 25px;}
+.links {border-top: 1px solid #010409;background-color: #010409;transition: all 0.3s;overflow-y: hidden;position: absolute;display: block;width: 100%;height: 0px;top: 50px;left: 0px;}
+.links a {display: block;width: 100%;}
+#hamburger:not(:checked)~.links {height: 0px;}
+#hamburger:checked~.links {height: calc(100vh - 50px);}
 }
-
-.editor textarea::-webkit-scrollbar-thumb {
-    background-color: #4caf50;
-    border-radius: 6px;
-}
-
-.editor textarea:focus {
-    outline: none;
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
-}
-
-.preview {
-    width: 90%;
-}
-
-iframe {
-    width: 100%;
-    height: 500px;
-    border: 2px solid #4caf50;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    transition: box-shadow 0.3s ease;
-}
-
-iframe:hover {
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.4);
-}
-
-button {
-    display: inline-block;
-    border-radius: 6px;
-    background-color: #4caf50;
-    border: none;
-    color: #ffffff;
-    text-align: center;
-    font-size: 17px;
-    padding: 12px;
-    width: 140px;
-    transition: all 0.5s;
-    cursor: pointer;
-    margin: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-    position: relative;
-    overflow: hidden;
-    margin-bottom: 30px;
-}
-
-/* Rest of the CSS remains the same */
-
-button:before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-}
-
-button:hover:before {
-    transform: translateX(0);
-}
-
-button span {
-    cursor: pointer;
-    display: inline-block;
-    position: relative;
-    transition: 0.5s;
-}
-
-button span:after {
-    content: '»';
-    position: absolute;
-    opacity: 0;
-    top: 0;
-    right: -20px;
-    transition: 0.5s;
-}
-
-button:hover span {
-    padding-right: 20px;
-}
-
-button:hover span:after {
-    opacity: 1;
-    right: 0;
-}
-
-@media (max-width: 1024px) {
-    .editor {
-        flex-direction: column;
-    }
-
-    .editor textarea {
-        height: 300px;
-    }
-
-    .preview iframe {
-        height: 450px;
-    }
-}
-
-@media (max-width: 768px) {
-    .editor textarea {
-        width: 93%;
-        height: 250px;
-    }
-
-    .preview iframe {
-        height: 400px;
-    }
-}
-
-@media (max-width: 480px) {
-    .editor textarea {
-        margin: 5px;
-    }
-
-    button {
-        width: 120px;
-        font-size: 15px;
-        padding: 10px;
-    }
-}
-
-@media (max-width: 320px) {
-    .editor textarea {
-        height: 200px;
-    }
-
-    .preview iframe {
-        height: 350px;
-    }
-}
+header {margin-top: -1px;border-radius: 5px;}
+h1{margin-bottom: 20px;margin-top: 10px;}
+.p{margin-bottom: 20px;}
     </style>
 </head>
 <body>
+<header>
+<nav class="navbar">
+    <input type="checkbox" id="hamburger">
+    <div>
+        <div class="nav-title">
+            <span><a href="">Editor</a></span>
+        </div>
+    </div>
+    <div class="hamburgerMenu">
+      <label for="hamburger">
+          <div></div>
+          <div></div>
+          <div></div>
+      </label>
+    </div>
+       <div class="links">
+           <a href="">Home</a>                  
+           <a href="#">Contact Us</a>
+           <a href="#">Log in</a>
+       </div>
+    </nav>
+</header>
     <div class="container">
         <h1>sample name</h1>
         <div class="editor">
@@ -416,20 +402,48 @@ $('.tab a').on('click', function (e) {
   
 });</textarea>
         </div>
-        <button onclick="runCode()">Run Code</button>
         <div class="preview">
             <iframe id="previewFrame"></iframe>
         </div>
     </div>
-
+    <footer class="footer">
+<div class="container">
+<nav class="footer-nav">
+<a href="https://dunals.github.io/Auto-Dealers/">Home</a> |
+<a href="#">Privacy Policy</a> |
+<a href="#">Terms and pakaya</a>
+</nav>
+<p class="p">&copy; <span id="year"></span> AutoDealersUsa. All rights reserved.</p>
+</div>
+</footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/htmlmixed/htmlmixed.min.js"></script>
     <script>
-        // Load code from local storage
-        
+        var htmlEditor = CodeMirror.fromTextArea(document.getElementById('htmlCode'), {
+            mode: 'htmlmixed',
+            theme: 'dracula',
+            lineNumbers: true
+        });
+
+        var cssEditor = CodeMirror.fromTextArea(document.getElementById('cssCode'), {
+            mode: 'css',
+            theme: 'dracula',
+            lineNumbers: true
+        });
+
+        var jsEditor = CodeMirror.fromTextArea(document.getElementById('jsCode'), {
+            mode: 'javascript',
+            theme: 'dracula',
+            lineNumbers: true
+        });
 
         function runCode() {
-            const htmlCode = document.getElementById('htmlCode').value;
-            const cssCode = document.getElementById('cssCode').value;
-            const jsCode = document.getElementById('jsCode').value;
+            const htmlCode = htmlEditor.getValue();
+            const cssCode = cssEditor.getValue();
+            const jsCode = jsEditor.getValue();
             const previewFrame = document.getElementById('previewFrame').contentWindow.document;
 
             previewFrame.open();
@@ -450,6 +464,15 @@ $('.tab a').on('click', function (e) {
             `);
             previewFrame.close();
         }
+
+        htmlEditor.on('change', runCode);
+        cssEditor.on('change', runCode);
+        jsEditor.on('change', runCode);
+
+        // Run the code initially
+        runCode();
+        document.addEventListener("DOMContentLoaded", (event) => {const yearElement = document.getElementById("year");const currentYear = new Date().getFullYear();yearElement.textContent = currentYear;});
     </script>
+
 </body>
 </html>
