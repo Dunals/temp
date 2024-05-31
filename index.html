@@ -14,14 +14,15 @@
             display: none;
         }
         .ad-container {
-            width: 100%;background-color: pink;
+            width: 100%;
         }
     </style>
 </head>
 <body>
 <div id="app" v-cloak>
-    {{ greeting }}
-    
+    <div>{{ greeting }}</div>
+    <input v-model="greeting" />
+
     <hr>
     <div v-show="vis" v-cloak class="box"></div>
 
@@ -36,7 +37,7 @@
     </div>
 </div>
 
-<script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
+<script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const { createApp, ref } = Vue;
@@ -53,7 +54,7 @@
             }
         }).mount('#app');
 
-        // Initialize AdSense
+        // Initialize AdSense after Vue is mounted
         (adsbygoogle = window.adsbygoogle || []).push({});
     });
 </script>
