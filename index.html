@@ -1,1 +1,34 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"/><link rel="icon" href="/favicon.ico"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#000000"/><meta name="description" content="Web site created using create-react-app"/><link rel="apple-touch-icon" href="/logo192.png"/><link rel="manifest" href="/manifest.json"/><title>React App</title><script defer="defer" src="/static/js/main.913db7e1.js"></script><link href="/static/css/main.165bf480.css" rel="stylesheet"></head><body><noscript>You need to enable JavaScript to run this app.</noscript><div id="root"></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>vue js</title>
+    <style>
+        .box{background-color: red;width: 200px;height: 200px;}
+        [v-cloak]{display: none;}
+    </style>
+</head>
+<body>
+<div id="app" v-cloak>
+    {{ greeting }}
+    
+    <hr>
+    <div v-show="vis" v-cloak class="box"></div>
+</div>
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script>
+    let app = Vue.createApp({
+        data: function() {
+            return {
+                greeting: 'hello vue 3!',
+                vis: false
+            }
+        }
+    });
+
+    app.mount('#app');
+</script>
+</body>
+</html>
