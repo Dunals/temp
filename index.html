@@ -14,7 +14,7 @@
             display: none;
         }
         .ad-container {
-            width: 100%;
+            width: 100%;background-color: pink;
         }
     </style>
 </head>
@@ -34,24 +34,26 @@
              data-ad-format="auto"
              data-full-width-responsive="true"></ins>
     </div>
-    <h1>hellow</h1>
 </div>
 
-<script defer src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js" defer></script>
 <script>
-    let app = Vue.createApp({
-        data: function() {
-            return {
-                greeting: 'hello vue 3!',
-                vis: false
+    document.addEventListener("DOMContentLoaded", function() {
+        const { createApp, ref } = Vue;
+
+        createApp({
+            setup() {
+                const greeting = ref('hello vue 3!');
+                const vis = ref(true);
+
+                return {
+                    greeting,
+                    vis
+                };
             }
-        }
-    });
+        }).mount('#app');
 
-    app.mount('#app');
-
-    // Initialize AdSense after Vue is mounted to avoid blocking initial render
-    window.addEventListener('load', function() {
+        // Initialize AdSense
         (adsbygoogle = window.adsbygoogle || []).push({});
     });
 </script>
