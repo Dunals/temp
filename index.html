@@ -1,38 +1,665 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Example</title>
-<style>
-/* Hide elements initially */
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
 
-</style>
+    <title>Your Directory Website</title>
+    <style>
+        @font-face {
+            font-family: "Roboto";
+            src: url("Roboto-Regular.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+        @font-face {
+            font-family: "Montserrat";
+            src: url("Montserrat-VariableFont_wght.ttf") format("truetype");
+            font-weight: normal;
+            font-style: normal;
+        }
+        
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            outline: none;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Roboto", sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            font-size: 15px;
+        }
+
+        header {
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            position: sticky;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo a {
+            color: #000000;
+            font-size: 1.5rem;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            list-style-type: none;
+            display: flex;
+            gap: 26px;
+            margin-left: auto;
+        }
+
+        .nav-links li {
+            margin: 0;
+        }
+
+        .nav-links a {
+            color: #000000;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #444444;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background-color: #fafafa;
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+
+        .hamburger-menu {
+            display: none;
+            cursor: pointer;
+        }
+
+        .bar {
+            width: 25px;
+            height: 3px;
+            background-color: #000000;
+            margin: 5px 0;
+            transition: 0.4s;
+        }
+        .container {
+            max-width: 1200px; /* Adjust the maximum width as per your design */
+            margin: 0 auto; /* Center the container horizontally */
+            padding: 0 20px; /* Add padding to the sides */
+            font-family: "Montserrat", sans-serif;
+
+        }
+        
+        main {
+            padding: 20px 0; /* Add spacing between content and edges of the container */
+            
+        }
+        .ad-space{display:block;margin-top:20px;margin-bottom:10px}
+        .ad-space .advertisement{font-size:smaller;color:#666;font-weight:normal;padding-bottom:5px;}
+        @media screen and (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #f0f0f0;
+                width: 100%;
+                padding: 10px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                text-align: left;
+                width: 90%;
+                margin: 10px 0;
+                padding-left: 20px;
+            }
+
+            .nav-links a {
+                display: block;
+                padding-bottom: 5px;
+            }
+
+            .nav-links a.home::after,
+            .nav-links a.about::after {
+                transform: scaleX(1);
+            }
+
+            .hamburger-menu {
+                display: block;
+            }
+        }
+        /* Existing styles for footer */
+footer {
+    background-color: #444444;
+    color: #eee;
+    padding: 20px;
+    text-align: center;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    padding: 20px;
+}
+
+.footer-column {
+    text-align: left;
+}
+
+.footer-column h4 {
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    font-weight: 300;
+}
+
+.footer-column ul li {
+    margin-bottom: 5px;
+}
+
+.footer-column ul li a {
+    color: #d5dbdb;
+    text-decoration: none;
+}
+
+.footer-column ul li a:hover {
+    color: #fff;
+}
+
+.footer-copy {
+    border-top: 1px solid #4d5656;
+    padding-top: 20px;
+    margin-top: 20px;
+    font-size: 0.9em;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1200px) {
+    .footer-content {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .footer-content {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+}
+/* Back to Top button styles */
+#backToTopBtn {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 16px;
+    border: none;
+    outline: none;
+    background-color: #444444;
+    color: #fff;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+#backToTopBtn:hover {
+    background-color: #555;
+}
+a, a:visited, a:focus, a:active {
+    outline: none;
+    color: inherit;
+    text-decoration: none;
+}
+
+a, a:focus, a:active {
+    outline: none;
+    text-decoration: none;
+    color: inherit;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+button, button:focus, button:active {
+    outline: none;
+    border: none;
+    -webkit-tap-highlight-color: transparent; 
+}
+
+.bank-title {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    padding-top: 30px;
+    color: #333;
+    
+}
+
+.phone-number {
+    font-size: 1.1em;
+    margin-bottom: 20px;
+    color: #c7c5c3;
+}
+.number{color: red;
+    font-size: 1.7em;
+}
+
+.section {
+    margin-bottom: 20px;
+}
+
+.section h3 {
+    font-size: 1.4em;
+    margin-bottom: 10px;
+    color: #333;
+    border-bottom: 2px solid #f0f0f0;
+    padding-bottom: 5px;
+}
+
+.info-list {
+    list-style: none;
+    padding-left: 0;
+
+}
+
+.info-list li {
+    margin-bottom: 10px; /* Adjust this value as needed */
+    display: flex;
+    align-items: flex-start; /* Align items at the top */
+}
+
+.info-list li strong {
+    display: inline-block;
+    width: 150px; /* Adjust width as per your design */
+    margin-right: 10px; /* Space between label and content */
+    flex-shrink: 0; /* Prevent label from shrinking */
+    color: #666;
+}
+
+.info-list li span {
+    flex: 1; /* Flexible width for the answer */
+}
+.info-list li a {
+    color: #007BFF;
+    text-decoration: none;
+}
+
+.info-list li a:hover {
+    text-decoration: underline;
+}
+/* Ensuring responsive design */
+@media (max-width: 768px) {
+    .bank-details {
+        padding: 10px;
+    }
+
+    .bank-title {
+        font-size: 1.5em;
+    }
+
+    .phone-number,
+    .section h3,
+    .info-list li {
+        font-size: 1em;
+    }
+
+    .section h3 {
+        font-size: 1.2em;
+    }
+}
+.tag{display:inline-block;padding:6px 14px;border-radius:5px;background-color:#ec7063;color:white;font-size:14px;font-weight:400;text-transform:capitalize;text-align:center;white-space:nowrap;margin:4px;box-shadow:0 .55rem 1.25rem rgb(0 65 98 / 4%);-webkit-box-shadow:0 .55rem 1.25rem rgb(0 65 98 / 4%)}
+.Btn {
+    width: 130px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #444444;
+    border: none;
+    color: white;
+    font-weight: 600;
+    gap: 8px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+  }
+  
+  .btn-ph {
+    width: 16px;
+    font-size: 15px;
+  }
+  
+  .btn-ph path {
+    fill: white;
+  }
+  
+  .Btn::before {
+    width: 130px;
+    height: 130px;
+    position: absolute;
+    content: "";
+    background-color: white;
+    border-radius: 50%;
+    left: -100%;
+    top: 0;
+    transition-duration: .3s;
+    mix-blend-mode: difference;
+  }
+  
+ 
+  /* Hours of operation list */
+.hours-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px; /* Adjust as needed */
+}
+
+.hours-list li {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f7f7f7;
+    border-left: 4px solid #d5dbdb; /* Green left border */
+}
+
+.hours-list li strong {
+    display: inline-block;
+    width: 100px; /* Adjust width based on content */
+    font-weight: bold;
+}
+
+.hours-list li:last-child {
+    margin-bottom: 0; /* Remove margin from last item */
+}
+
+.related-contacts {
+    margin-top: 30px;
+    margin-bottom: 20px;
+}
+.related-contacts h3{
+margin-bottom: 20px;}
+.contact-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.contact-item {
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #f7f7f7;
+}
+
+
+.contact-item h4 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 100%; /* adjust as needed */
+    display: block;
+    font-size: 1.1rem;
+    margin-bottom: 5px;
+}
+
+.contact-item p {
+    margin: 0;
+}
+
+.contact-item .contact-number {
+    color: red;
+}
+.contact-item:hover {
+    border-color: #f5f5f5; /* Change border color on hover */
+    outline: 1.5px solid #f5f5f5; /* Add outline on hover */
+}
+
+    </style>
 </head>
 <body>
+    <button onclick="topFunction()" id="backToTopBtn" title="Go to top">&#8679;</button>
 
-<!-- Content to be hidden initially -->
-<div class="hidden" id="content">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5283510862141253" crossorigin="anonymous"></script>
+        <header>
+            <nav class="navbar">
+                <div class="logo">
+                    <a href="/">USBANKS</a>
+                </div>
+                <ul class="nav-links">
+                    <li><a href="/" class="home">Home</a></li>
+                    <li><a href="/about" class="about">About</a></li>
+                    <li><a href="/contact">Contact</a></li>
+                </ul>
+                <div class="hamburger-menu" onclick="toggleMenu()">
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                    <div class="bar"></div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <h1 class="bank-title">First Missouri Bank Kearney Branch Phone Number</h1>
+            <p class="phone-number"><strong>Phone Number:<span class="number"><br> (+1) 816-903-9010</span></strong></p>
+    
+            <div class="ad-space">
+                <p class="advertisement">Advertisement</p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2678979521267317" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2678979521267317" data-ad-slot="4095651232" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+            </div>
+            <center>
+            <button class="Btn">
+                <span class="btn-ph">☎</span> Contact Now
+              </button>
+            </center>
+            <main>
+            <section>
+                <div class="bank-details">
 
-  <h1>Welcome to My Website papaa</h1>
-  <p>This content will be hidden initially.</p>
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5283510862141253"
-     crossorigin="anonymous"></script>
-    <!-- USLookup.one -->
-    <ins class="adsbygoogle"
-     style="display:block"
-     data-ad-client="ca-pub-5283510862141253"
-     data-ad-slot="4773976577"
-     data-ad-format="auto"
-     data-full-width-responsive="true"></ins>
-    <script>
-     (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-</div>
+                    <div class="section">
+                        <h3>Branch Information</h3>
+                        <ul class="info-list">
+                            <li><strong>Branch Name:</strong> Kearney</li>
+                            <li><strong>Phone Number:</strong> 816-903-9010</li>
+                            <li><strong>Service Type:</strong> Full Service Office</li>
+                            <li><strong>State & County:</strong> Missouri - Clay</li>
+                            <li><strong>City or Town:</strong> Kearney</li>
+                            <li><strong>Zip Code:</strong> 64060</li>
+                            <li><strong>Office Address:</strong> 455 Sam Barr Drive, Kearney, MO 64060</li>
+                        </ul>
+                    </div>
+            
+                    <div class="section">
+                        <h3>Bank Information</h3>
+                        <ul class="info-list">
+                            <li><strong>Bank Name:</strong> First Missouri Bank</li>
+                            <li><strong>Bank Type:</strong> Federal Reserve Member Bank</li>
+                            <li><strong>FDIC Insurance:</strong> Certificate #28930</li>
+                            <li><strong>Online Banking:</strong> <a href="https://firstmo.bank" target="_blank">firstmo.bank</a></li>
+                            <li><strong>Branch Count:</strong> 6 Offices in Missouri</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+            <div class="ad-space">
+                <p class="advertisement">Advertisement</p>
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2678979521267317" crossorigin="anonymous"></script>
+                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-2678979521267317" data-ad-slot="4095651232" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                <script>(adsbygoogle=window.adsbygoogle||[]).push({});</script>
+            </div>
 
-<!-- Script to change class and reveal content -->
+            <h3>First Missouri Bank, Kearney Branch Hours of Operation</h3>
 
+            <p>Every branch has its own set of hours; we&lsquo;ve listed the daily hours for the main headquarters branch below. It also applies to a variety of other branches; however, you should check your particular branch for more current and up-to-date information.</p>
+            
+            <ul class="hours-list">
+                <li><strong>Monday:</strong> 9:00 am - 5:00 pm</li>
+                <li><strong>Tuesday:</strong> 9:00 am - 5:00 pm</li>
+                <li><strong>Wednesday:</strong> 9:00 am - 5:00 pm</li>
+                <li><strong>Thursday:</strong> 9:00 am - 5:00 pm</li>
+                <li><strong>Friday:</strong> 9:00 am - 6:00 pm</li>
+                <li><strong>Saturday:</strong> 9:00 am - 6:00 pm</li>
+                <li><strong>Sunday:</strong> Closed</li>
+            </ul><br>
+            <h3>What documentation is required to open a bank account in the First Missouri Bank, United States?</h3>
+<br>
+<p>The documents you&lsquo;ll need to support your bank account application varies. It is dependent on the bank as well as the state of the United States. However, it&lsquo;s a good idea to keep the following items on hand in general:</p>
+<br>
+<ul>
+<li>Your full US address, phone number, and other personal information</li>
+<li>Your driver&lsquo;s license or passport are both acceptable forms of identification.</li>
+<li>Your immigration paperwork (i.e. a valid visa or Green Card)</li>
+<li>A payment for the initial deposit.</li>
+<li>Importantly, you&lsquo;ll almost always be asked for your Social Security number (SSN). Non-residents and non-citizens may face significant challenges, although they are not insurmountable. It&lsquo;s a good idea to have the following items on hand:</li>
+</ul>
+<br>
+<h3>What Do You Need to Open a Business Bank Account in the First Missouri Bank, United States?</h3>
+<br>
+<ul>
 
-</body>
-</html>
+<li>To open a business bank account, you&lsquo;ll need to know what papers and licenses you&lsquo;ll require.</li>
+
+<li>To open a business bank account, you&lsquo;ll need your articles of incorporation, employer identification number, and personal identification documents.</li>
+
+<li>It is possible to open a business checking and savings account.</li>
+
+<li>You&lsquo;ll need a business bank account to keep your business and personal finances separate.</li>
+
+</ul>
+            </main>
+            <section class="related-contacts">
+                <h3>Related Contacts</h3>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <a href="#" title="Capital One, Leesburg">
+                        <h4>Capital One, Leesburg Leesburg Leesburg</h4>
+                        <p><span class="contact-number">571-333-243</span>  |  Lansdowne</p>
+                    </a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#" title="Capital One, Leesburg">
+                        <h4>Capital One, Leesburg</h4>
+                        <p><span class="contact-number">571-333-243</span>  |  Lansdowne</p>
+                    </a>
+                    </div>
+                    <div class="contact-item">
+                        <a href="#" title="Capital One, Leesburg">
+                        <h4>Capital One, Leesburg</h4>
+                        <p><span class="contact-number">571-333-243</span>  |  Lansdowne</p>
+                    </a>
+                    </div> 
+                                       
+                </div>
+            </section>
+            
+            
+        </div>
+    
+        <footer>
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h2>USBANKS</h2>
+                    <br><hr><br>
+                    <p>Find trusted auto dealers nationwide in our comprehensive directory. Simplify your car shopping experience with USLookup&#039;s Auto Dealers Directory.</p>
+                </div>
+                <div class="footer-column">
+                    <h4>Miscellaneous</h4>
+                    <ul>
+                        <br><hr><br>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/recent-contacts.html">Recent Added</a></li>
+                        <li><a href="/popular-contacts.html">Frequently searched</a></li>
+                        <li><a href="/sitemap.xml">Sitemap</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Legal</h4>
+                    <br><hr><br>
+                    <ul>
+                        <li><a href="/about.html">About</a></li>
+                        <li><a href="/privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="/terms-and-conditions.html">Terms and Conditions</a></li>
+                        <li><a href="/contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h4>Contact</h4>
+                    <br><hr><br>
+                    <ul>
+                    <li>Email: <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="0c6f646d78647922616d6f3a4c6b616d6560226f6361">email@gmail.com</a></li>
+                    <li>Phone: +1646-296-5402</li>
+                    <li>Address: Frank K. Barrett 3632 Geraldine Lane Elmsford, NY 10523</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="footer-copy">&copy; 2024 Your Uslookup. All rights reserved.</p>
+          </footer>
+    
+        <script>
+            function toggleMenu() {
+                const menuToggle = document.querySelector('.nav-links');
+                menuToggle.classList.toggle('active');
+            }// JavaScript for back to top button
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("backToTopBtn").style.display = "block";
+    } else {
+        document.getElementById("backToTopBtn").style.display = "none";
+    }
+}
+
+function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+
+        </script>
+    </body>
+    
